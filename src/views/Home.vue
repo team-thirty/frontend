@@ -1,17 +1,13 @@
 <template>
-  <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
+  <div class="home text-center">
+    <br>
+    <v-btn to="/dashboard" color="green" dark>To Dashboard</v-btn>
   </div>
 </template>
 
 <script>
-// import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
   name: "home",
-  components: {
-    // HelloWorld
-  }
 };
 </script>

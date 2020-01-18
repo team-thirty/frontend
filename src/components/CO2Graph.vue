@@ -14,15 +14,33 @@ export default {
         yAxes: [
           {
             ticks: {
-              beginAtZero: true
+              beginAtZero: false
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'CO2 g/kWHr'
+            }
+          }
+        ],
+        xAxes: [
+          {
+            scaleLabel: {
+              display: true,
+              labelString: 'Hours elapsed'
             }
           }
         ]
-      }
+      },
+      animation: {
+        duration: 0
+      },
+      hover: {
+        animationDuration: 0
+      },
+      responsiveAnimationDuration: 0
     }
   }),
   mounted() {
-    console.log(this.graphData);
     this.renderChart(this.graphData, this.options);
   }
 };
