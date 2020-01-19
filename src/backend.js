@@ -1,6 +1,6 @@
 import axios from "axios";
-// const URL = "https://team30app0.azurewebsites.net";
-const URL = "http://localhost:5000";
+const URL = "https://team30app0.azurewebsites.net";
+// const URL = "http://localhost:5000";
 
 export function getData(postcode) {
   return axios.get(`${URL}/get_graph_data`, {
