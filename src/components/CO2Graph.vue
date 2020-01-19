@@ -30,14 +30,14 @@ export default {
             }
           }
         ]
-      },
-      animation: {
-        duration: 0
-      },
-      hover: {
-        animationDuration: 0
-      },
-      responsiveAnimationDuration: 0
+      }
+      // animation: {
+      //   duration: 0
+      // },
+      // hover: {
+      //   animationDuration: 0
+      // },
+      // responsiveAnimationDuration: 0
     }
   }),
   mounted() {
