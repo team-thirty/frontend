@@ -35,7 +35,7 @@
                 color="green"
                 outlined
                 large
-                @click="fetchGraphata()"
+                @click="fetchGraphData()"
               >
                 update
               </v-btn>
@@ -72,9 +72,14 @@
             </v-col>
           </v-row>
           <v-row>
+            <v-col>
             <v-btn @click="applyConfig" class="white--text" color="green"
               >Apply</v-btn
             >
+            </v-col>
+            <v-col>
+              <v-chip v-if="saving" id="savingChip" color="green" dark> CO2 saving: {{ Math.trunc(saving) }}%</v-chip>
+            </v-col>
           </v-row>
         </v-flex>
       </v-layout>
@@ -88,6 +93,7 @@ import { getData, sendConfig } from "@/backend.js";
 // const labels24hr = [ -48,-47,-46,-45,-44,-43,-42,-41,-40,-39,-38,-37,-36,-35,-34,-33,-32,-31,-30,-29,-28,-27,-26,-25,-24,-23,-22,-21,-20,-19,-18,-17,-16,-15,-14,-13,-12,-11,-10,-9,-8,-7,-6,-5,-4,-3,-2,-1 ];
 // eslint-disable-next-line
 const labels24hr = [-24.0, -23.5, -23.0, -22.5, -22.0, -21.5, -21.0, -20.5, -20.0, -19.5, -19.0, -18.5, -18.0, -17.5, -17.0, -16.5, -16.0, -15.5, -15.0, -14.5, -14.0, -13.5, -13.0, -12.5, -12.0, -11.5, -11.0, -10.5, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5];
+// eslint-disable-next-line
 const labels48hr = [-24.0, -23.5, -23.0, -22.5, -22.0, -21.5, -21.0, -20.5, -20.0, -19.5, -19.0, -18.5, -18.0, -17.5, -17.0, -16.5, -16.0, -15.5, -15.0, -14.5, -14.0, -13.5, -13.0, -12.5, -12.0, -11.5, -11.0, -10.5, -10.0, -9.5, -9.0, -8.5, -8.0, -7.5, -7.0, -6.5, -6.0, -5.5, -5.0, -4.5, -4.0, -3.5, -3.0, -2.5, -2.0, -1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5, 10.0, 10.5, 11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 14.5, 15.0, 15.5, 16.0, 16.5, 17.0, 17.5, 18.0, 18.5, 19.0, 19.5, 20.0, 20.5, 21.0, 21.5, 22.0, 22.5, 23.0, 23.5 ];
 
 
@@ -103,9 +109,10 @@ export default {
     threshold: 130,
     manual: false,
     graphPoints: 24,
-    time: 3,
-    window: 8,
+    time: 12,
+    window: 20,
     refreshProp: 1,
+    saving: 0,
     pastData: [],
     forecastData: [],
     graphData: {
@@ -136,12 +143,22 @@ export default {
       }
     },
     applyConfig() {
-      sendConfig(this.manual, this.threshold, this.time, this.window);
+      sendConfig(this.manual, this.threshold, this.time, this.window).then(
+        resp => {
+          console.log("returned");
+          console.log(resp);
+          this.saving =
+            (100 * (resp.data.dumb_sum - resp.data.smart_sum)) /
+            resp.data.dumb_sum;
+        }
+      );
     },
     updateThresh() {
       if (this.manual) {
         if (this.graphData.datasets.length == 2) {
-          this.graphData.datasets[1].data = Array(this.graphPoints).fill(this.threshold);
+          this.graphData.datasets[1].data = Array(this.graphPoints).fill(
+            this.threshold
+          );
         } else {
           this.graphData.datasets.push({
             label: "Threshold",
@@ -196,5 +213,8 @@ export default {
 }
 #updateBtn {
   height: 55px;
+}
+#savingChip {
+  /* margin-top: 10px; */
 }
 </style>

@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app color="green" dark>
       <div class="d-flex align-center">
-        <v-toolbar-title>Project 30</v-toolbar-title>
+        <v-toolbar-title>SMUG</v-toolbar-title>
       </div>
 
       <v-spacer></v-spacer>
