@@ -2,7 +2,8 @@
   <v-app>
     <v-app-bar app color="green" dark>
       <div class="d-flex align-center">
-        <v-toolbar-title>SMUG</v-toolbar-title>
+        <!-- <v-toolbar-title>SMUG</v-toolbar-title> -->
+        <v-img :src="require('@/assets/logo.png')" >
       </div>
 
       <v-spacer></v-spacer>
